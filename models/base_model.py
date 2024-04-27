@@ -25,9 +25,10 @@ class BaseModel:
         self.updated_at = datetime.datetime.now()
 
         if len(kwargs) > 0:
-            kwargs['created_at'] = datetime.datetime.fromisoformat(
+            self.__dict__ = kwargs.copy()
+            self.__dict__['created_at'] = datetime.datetime.fromisoformat(
                 kwargs['created_at'])
-            kwargs['updated_at'] = datetime.datetime.fromisoformat(
+            self.__dict__['updated_at'] = datetime.datetime.fromisoformat(
                 kwargs['updated_at'])
 
         else:
