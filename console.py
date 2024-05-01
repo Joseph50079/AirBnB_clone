@@ -3,6 +3,7 @@
 """Console.py file the entry point of the command interpreter"""
 
 import cmd
+from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand is a command interpreter class
@@ -21,7 +22,23 @@ class HBNBCommand(cmd.Cmd):
         """Quit command to exit the program\n"""
 
         return True
+    
+    def do_create(self, arg):
+        """
+        Creates a new instance of BaseModel, 
+        saves it (to the JSON file) and prints the id
+
+        """
 
 
+        if not arg:
+            print("** class name missing **")
+
+        elif arg != 'BaseModel':
+            print('** class doesn\'t exist **')
+        else:
+            arg = BaseModel()
+            print(arg.id)
+        
 if __name__ == '__main__':
      HBNBCommand().cmdloop()
