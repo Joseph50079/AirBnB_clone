@@ -2,6 +2,7 @@
 
 import datetime
 import uuid
+from . __init__ import storage
 
 """Module Base_model for all Airbnb models
 
@@ -25,16 +26,14 @@ class BaseModel:
         self.updated_at = datetime.datetime.now()
 
         if len(kwargs) > 0:
-            self.__dict__ = kwargs.copy()
+            self.__dict__.update(kwargs)
             self.__dict__['created_at'] = datetime.datetime.fromisoformat(
                 kwargs['created_at'])
             self.__dict__['updated_at'] = datetime.datetime.fromisoformat(
                 kwargs['updated_at'])
 
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.datetime.now()
-            self.updated_at = datetime.datetime.now()
+            storage.new(self)
 
     def __str__(self):
         return "[{}] ({}) {}".format(
@@ -46,6 +45,7 @@ class BaseModel:
 
         """
         self.updated_at = datetime.datetime.now()
+        storage.save()
 
     def to_dict(self):
         """ to_dict returns a dictionary containing all keys/values of __dict__
