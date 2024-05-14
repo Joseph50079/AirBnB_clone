@@ -2,7 +2,7 @@
 
 import datetime
 import uuid
-from . __init__ import storage
+
 
 """Module Base_model for all Airbnb models
 
@@ -31,8 +31,10 @@ class BaseModel:
                 kwargs['created_at'])
             self.__dict__['updated_at'] = datetime.datetime.fromisoformat(
                 kwargs['updated_at'])
+            self.__dict__.pop("__class__")
 
         else:
+            from models import storage
             storage.new(self)
 
     def __str__(self):
@@ -44,6 +46,7 @@ class BaseModel:
             with the current datetime
 
         """
+        from models import storage
         self.updated_at = datetime.datetime.now()
         storage.save()
 
