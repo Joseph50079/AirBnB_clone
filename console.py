@@ -20,6 +20,7 @@ def parser_arg(arg):
         
     elif args[0] != 'BaseModel':
         print('** class doesn\'t exist **')
+        return None
 
     return args
         
@@ -99,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
         """
         args = parser_arg(arg)
 
-        if not arg:
+        if not args:
             return
 
         elif len(args) != 2:
@@ -116,6 +117,27 @@ class HBNBCommand(cmd.Cmd):
                 print(objs)
             else:
                 all_obj.pop(f"{cls}.{id_n}")
+                storage.save()
+
+    def do_all(self, arg):
+        """ Prints all string representation of all instances based or not on the class name.\
+        Ex: $ all BaseModel or $ all.
+        """
+
+        if arg and arg != 'BaseModel':
+            print('** class doesn\'t exist **')
+            return
+
+        else:    
+            list_all = []
+            all_objs = storage.all()
+            for key in all_objs.keys():
+                val = str(all_objs.get(key))
+                list_all.append(val)
+            print(list_all)
+
+    def do_update(self, arg):
+        pass
 
         
 if __name__ == "__main__":   
