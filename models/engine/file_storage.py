@@ -22,7 +22,7 @@ class FileStorage:
         Set an object in __objects with key "<class name>.<id>".
         """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.__objects.update({key : obj})
+        self.__objects.update({key: obj})
 
     def save(self):
         """

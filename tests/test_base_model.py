@@ -4,6 +4,7 @@ import unittest
 from models.base_model import BaseModel
 import datetime
 
+
 class TestBaseModel(unittest.TestCase):
     def setUp(self):
         self.base_model = BaseModel()
@@ -14,7 +15,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(self.base_model.updated_at, datetime.datetime)
 
     def test_str(self):
-        expected_str = "[BaseModel] ({}) {}".format(self.base_model.id, self.base_model.__dict__)
+        expected_str = "[BaseModel] ({}) {}".format(
+            self.base_model.id, self.base_model.__dict__)
         self.assertEqual(str(self.base_model), expected_str)
 
     def test_save(self):
@@ -31,6 +33,7 @@ class TestBaseModel(unittest.TestCase):
             'updated_at': self.base_model.updated_at.isoformat()
         }
         self.assertDictEqual(self.base_model.to_dict(), expected_dict)
+
 
 if __name__ == '__main__':
     unittest.main()
