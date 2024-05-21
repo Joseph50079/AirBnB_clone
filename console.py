@@ -63,7 +63,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             arg = BaseModel()
             print(arg.id)
-            print(arg)
             storage.new(arg)
             storage.save()
             return
@@ -163,8 +162,12 @@ class HBNBCommand(cmd.Cmd):
                 print('** value missing **')
                 return
             else:
-                key = f"{cls}.{id_n}"
-                setattr(objs, args[2], args[3])
+                if args[2] in type(objs).__dict__:
+                    v_type = type(objs.__class__.__dict__[args[2]])
+                    setattr(objs, args[2], v_type(args[3]))
+                else:
+                    key = f"{cls}.{id_n}"
+                    setattr(objs, args[2], args[3])
                 storage.save()
                 storage.reload()
 
