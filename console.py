@@ -17,17 +17,17 @@ def parser_arg(arg):
 
     if len(args) == 0:
         return None
-        
+
     elif args[0] != 'BaseModel':
         print('** class doesn\'t exist **')
         return None
 
     return args
-        
+
 
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand is a command interpreter class
-        contains all the required command to 
+        contains all the required command to
         manage this models
     """
 
@@ -48,14 +48,13 @@ class HBNBCommand(cmd.Cmd):
         """Quit command to exit the program\n"""
 
         return True
-    
+
     def do_create(self, arg):
         """
-        Creates a new instance of BaseModel, 
+        Creates a new instance of BaseModel,
         saves it (to the JSON file) and prints the id
 
         """
-
 
         args = parser_arg(arg)
         if not args:
@@ -68,11 +67,10 @@ class HBNBCommand(cmd.Cmd):
             storage.new(arg)
             storage.save()
             return
-    
 
     def do_show(self, arg):
         """
-        Prints the string representation of an instance 
+        Prints the string representation of an instance
         based on the class name and id
 
         """
@@ -80,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
 
         if not args:
             return
-            
+
         elif len(args) != 2:
             print('** instance id missing **')
             return
@@ -93,9 +91,8 @@ class HBNBCommand(cmd.Cmd):
             objs = all_obj.get(f"{cls}.{id_n}", '** no instance found **')
             print(objs)
 
-
     def do_destroy(self, arg):
-        """destroy: Deletes an instance based on the class name and 
+        """destroy: Deletes an instance based on the class name and
         id (save the change into the JSON file). Ex: $ destroy BaseModel 1234-1234-1234
         """
         args = parser_arg(arg)
@@ -128,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
             print('** class doesn\'t exist **')
             return
 
-        else:    
+        else:
             list_all = []
             all_objs = storage.all()
             for key in all_objs.keys():
@@ -171,6 +168,6 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
                 storage.reload()
 
-        
-if __name__ == "__main__":   
-    HBNBCommand().cmdloop() 
+
+if __name__ == "__main__":
+    HBNBCommand().cmdloop()
