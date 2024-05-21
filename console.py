@@ -137,7 +137,39 @@ class HBNBCommand(cmd.Cmd):
             print(list_all)
 
     def do_update(self, arg):
-        pass
+        """update: Updates an instance based on the class name and id by 
+            adding or updating attribute (save the change into the JSON file). 
+            Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
+        """
+        args = parser_arg(arg)
+
+        if not args:
+            return
+
+        elif len(args) < 2:
+            print('** instance id missing **')
+            return
+
+        else:
+            l = args
+            cls = l[0]
+            id_n = l[1]
+            all_obj = storage.all()
+            objs = all_obj.get(f"{cls}.{id_n}", '** no instance found **')
+            if objs == '** no instance found **':
+                print(objs)
+                return
+            elif len(args) < 3:
+                print('** attribute name missing **')
+                return
+            elif len(args) < 4:
+                print('** value missing **')
+                return
+            else:
+                key = f"{cls}.{id_n}"
+                setattr(objs, args[2], args[3])
+                storage.save()
+                storage.reload()
 
         
 if __name__ == "__main__":   
