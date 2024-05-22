@@ -5,6 +5,22 @@ import datetime
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.amenity import Amenity
+
+Class = [
+    'BaseModel',
+    'User',
+    'State',
+    'City',
+    'Place',
+    'Review',
+    'Amenity'
+]
 
 
 def parser_arg(arg):
@@ -18,7 +34,7 @@ def parser_arg(arg):
     if len(args) == 0:
         return None
 
-    elif args[0] != 'BaseModel':
+    elif args[0] not in Class:
         print('** class doesn\'t exist **')
         return None
 
@@ -61,7 +77,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         else:
-            arg = BaseModel()
+            arg = arg[0]()
             print(arg.id)
             storage.new(arg)
             storage.save()
@@ -120,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
         Ex: $ all BaseModel or $ all.
         """
 
-        if arg and arg != 'BaseModel':
+        if arg and arg not in Class:
             print('** class doesn\'t exist **')
             return
 
