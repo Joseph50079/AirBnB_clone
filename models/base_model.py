@@ -26,13 +26,13 @@ class BaseModel:
         self.updated_at = datetime.datetime.now()
 
         if len(kwargs) > 0:
-            self.__dict__.update(kwargs)
-            self.__dict__['created_at'] = datetime.datetime.fromisoformat(
-                kwargs['created_at'])
-            self.__dict__['updated_at'] = datetime.datetime.fromisoformat(
-                kwargs['updated_at'])
-            self.__dict__.pop("__class__")
-
+            for x in kwargs.keys():
+                if x == "created_at" or x == "updated_at":
+                    self.__dict__[x] = datetime.datetime.fromisoformat(
+                            kwargs[x]
+                        )
+                else:
+                    self.__dict__[x] = kwargs[x]
         else:
             from models import storage
             storage.new(self)
