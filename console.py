@@ -22,6 +22,8 @@ Class = [
     'Amenity'
 ]
 
+Not_attr = ['id', 'created_at', 'updated_at']
+
 
 def parser_arg(arg):
     if not arg:
@@ -77,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         else:
-            arg = arg[0]()
+            arg = eval(args[0])()
             print(arg.id)
             storage.new(arg)
             storage.save()
@@ -171,13 +173,20 @@ class HBNBCommand(cmd.Cmd):
             if objs == '** no instance found **':
                 print(objs)
                 return
+            
+            
             elif len(args) < 3:
                 print('** attribute name missing **')
                 return
             elif len(args) < 4:
                 print('** value missing **')
                 return
+
+            elif args[2].strip('"') in Not_attr:
+                return
             else:
+                args[2] = args[2].strip('"')
+                args[3] = args[3].strip('"')
                 if args[2] in type(objs).__dict__:
                     v_type = type(objs.__class__.__dict__[args[2]])
                     setattr(objs, args[2], v_type(args[3]))
