@@ -101,16 +101,16 @@ class HBNBCommand(cmd.Cmd):
             return
 
         else:
-            l = args
-            cls = l[0]
-            id_n = l[1]
+            cls = args[0]
+            id_n = args[1]
             all_obj = storage.all()
             objs = all_obj.get(f"{cls}.{id_n}", '** no instance found **')
             print(objs)
 
     def do_destroy(self, arg):
         """destroy: Deletes an instance based on the class name and
-        id (save the change into the JSON file). Ex: $ destroy BaseModel 1234-1234-1234
+        id (save the change into the JSON file).
+        Ex: $ destroy BaseModel 1234-1234-1234
         """
         args = parser_arg(arg)
 
@@ -122,9 +122,8 @@ class HBNBCommand(cmd.Cmd):
             return
 
         else:
-            l = args
-            cls = l[0]
-            id_n = l[1]
+            cls = args[0]
+            id_n = args[1]
             all_obj = storage.all()
             objs = all_obj.get(f"{cls}.{id_n}", '** no instance found **')
             if objs == '** no instance found **':
@@ -134,7 +133,8 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
 
     def do_all(self, arg):
-        """ Prints all string representation of all instances based or not on the class name.\
+        """ Prints all string representation of all instances
+          based or not on the class name.\
         Ex: $ all BaseModel or $ all.
         """
 
@@ -165,9 +165,8 @@ class HBNBCommand(cmd.Cmd):
             return
 
         else:
-            l = args
-            cls = l[0]
-            id_n = l[1]
+            cls = args[0]
+            id_n = args[1]
             all_obj = storage.all()
             objs = all_obj.get(f"{cls}.{id_n}", '** no instance found **')
             if objs == '** no instance found **':
