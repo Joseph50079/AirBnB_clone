@@ -15,12 +15,19 @@ class TestUser(unittest.TestCase):
         self.assertTrue(hasattr(User, "first_name")
                         and hasattr(User, "last_name"))
 
+        self.assertTrue(hasattr(User, "password")
+                        and hasattr(User, "email"))
+
     def test_class_attrs(self):
         u = User()
+        self.assertIs(type(u.email), str)
+        self.assertIs(type(u.password), str)
         self.assertIs(type(u.first_name), str)
         self.assertIs(type(u.last_name), str)
         self.assertTrue(u.first_name == "")
         self.assertTrue(u.last_name == "")
+        self.assertTrue(u.password == "")
+        self.assertTrue(u.email == "")
 
     def test_user_is_a_subclass_of_basemodel(self):
         u = User()

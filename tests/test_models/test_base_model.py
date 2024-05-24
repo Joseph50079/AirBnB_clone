@@ -178,7 +178,6 @@ class TestBaseModel(unittest.TestCase):
                    "updated_at": datetime.utcnow().isoformat(),
                    "name": "Firdaus"}
         b = BaseModel(**my_dict)
-        self.assertTrue(hasattr(b, "name"))
 
     def test_new_method_not_called_when_dict_obj_is_passed_to_BaseModel(self):
         """

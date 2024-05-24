@@ -33,7 +33,7 @@ class BaseModel:
                     )
                 else:
                     self.__dict__[x] = kwargs[x]
-            self.__dict__.pop(x)
+
         else:
             from models import storage
             storage.new(self)
