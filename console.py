@@ -3,6 +3,7 @@
 """Console.py file the entry point of the command interpreter"""
 import datetime
 import cmd
+from shlex import split
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
@@ -11,6 +12,7 @@ from models.city import City
 from models.place import Place
 from models.review import Review
 from models.amenity import Amenity
+import re
 
 Class = [
     'BaseModel',
@@ -56,6 +58,33 @@ class HBNBCommand(cmd.Cmd):
         when key <ENTER> is clicked\n
         """
         pass
+
+    def default(self, arg):
+        """Default function of onecmd of console"""
+        action_map = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "count": self.do_count,
+            "update": self.do_update,
+            "create": self.do_create
+        }
+
+        args = arg.split('.')
+        if args[0] in Class:
+            if len(args) != 2:
+                return
+            else:
+                match = re.search(r"\((.*?)\)", args[1])
+                if match:
+                    match = match.group(1)
+                    command = match.strip(',"')
+                    if args[1].split("(")[0] in action_map.keys():
+                        call = "{} {}".format(args[0], command)
+                        return action_map[args[1].split("(")[0]](call)
+
+        print("*** Unknown syntax: {}".format(arg))
+        return False
 
     def do_EOF(self, arg):
         """Quit command to exit the program\n"""
@@ -137,18 +166,16 @@ class HBNBCommand(cmd.Cmd):
           based or not on the class name.\
         Ex: $ all BaseModel or $ all.
         """
-
-        if arg and arg not in Class:
-            print('** class doesn\'t exist **')
-            return
-
+        arg_list = split(arg)
+        objects = storage.all().values()
+        if not arg_list:
+            print([str(obj) for obj in objects])
         else:
-            list_all = []
-            all_objs = storage.all()
-            for key in all_objs.keys():
-                val = str(all_objs.get(key))
-                list_all.append(val)
-            print(list_all)
+            if arg_list[0] not in Class:
+                print("** class doesn't exist **")
+            else:
+                print([str(obj) for obj in objects
+                       if arg_list[0] in str(obj)])
 
     def do_update(self, arg):
         """update: Updates an instance based on the class name and id by
@@ -193,6 +220,15 @@ class HBNBCommand(cmd.Cmd):
                     setattr(objs, args[2], args[3])
                 storage.save()
                 storage.reload()
+
+    def do_count(self, arg):
+        """Retrieve the number of instances of a class"""
+        arg1 = parser_arg(arg)
+        count = 0
+        for obj in storage.all().values():
+            if arg1[0] == type(obj).__name__:
+                count += 1
+        print(count)
 
 
 if __name__ == "__main__":

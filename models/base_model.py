@@ -29,10 +29,11 @@ class BaseModel:
             for x in kwargs.keys():
                 if x == "created_at" or x == "updated_at":
                     self.__dict__[x] = datetime.datetime.fromisoformat(
-                            kwargs[x]
-                        )
+                        kwargs[x]
+                    )
                 else:
                     self.__dict__[x] = kwargs[x]
+            self.__dict__.pop(x)
         else:
             from models import storage
             storage.new(self)
