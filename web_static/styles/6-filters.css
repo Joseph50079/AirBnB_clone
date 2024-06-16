@@ -49,11 +49,11 @@ button:hover {
 
 .locations h4, .amenities h4 {
     font-weight: 400;
-    margin: 0px 50px 17px 50px;
+    margin: 0px 50px 21px 50px;
 }
 
 .popover {
-    width: 100%;
+    width: 101.3%;
     background-color: #FAFAFA;
     border: 1px solid #DDDDDD;
     visibility: hidden;
@@ -62,15 +62,19 @@ button:hover {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     padding: 20px;
+    position: relative;
+    left: -0.7%;
     z-index: 10;
 }
 .popover, .popover ul {
     list-style: none;
+    margin-bottom: 30px;
 }
 
 .popover li {
     margin-bottom: 5px;
     margin-left: 30px;
+    margin-top: 5px;
 }
 
 .locations:hover .popover, .amenities:hover .popover {
